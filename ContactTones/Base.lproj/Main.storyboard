@@ -138,20 +138,6 @@
                                             <constraint firstItem="m0b-eA-SRS" firstAttribute="centerY" secondItem="2f7-SG-rP8" secondAttribute="centerY" id="g1W-5K-pzW"/>
                                             <constraint firstItem="zWk-Ia-XVW" firstAttribute="leading" secondItem="m0b-eA-SRS" secondAttribute="trailing" constant="20" id="jnn-KL-tmh"/>
                                         </constraints>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
-                                                <color key="value" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
-                                                <size key="value" width="0.0" height="0.0"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="shadowCapacity">
-                                                <real key="value" value="0.5"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
-                                                <integer key="value" value="5"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zdB-y5-Rch">
                                         <rect key="frame" x="0.0" y="80" width="375" height="5"/>

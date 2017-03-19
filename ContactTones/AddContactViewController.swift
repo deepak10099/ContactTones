@@ -13,15 +13,16 @@ import ContactsUI
 
 
 protocol AddContactViewControllerDelegate {
-    func didFetchContacts(_ contacts: [CNContact])
+    func didFetchContacts(_ contacts: [CNMutableContact])
 }
 
 class AddContactViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
 
     var showOnlySelectedContacts = true
 
-    var fetchedContacts:[CNContact] = []
-    var selectedContacts:[CNContact] = []
+    var allSelected:Bool = false
+    var fetchedContacts:[CNMutableContact] = []
+    var selectedContacts:[CNMutableContact] = []
     var delegate: AddContactViewControllerDelegate!
 
     @IBOutlet weak var selectAllContactView: UIView!
@@ -35,9 +36,8 @@ class AddContactViewController: UIViewController, UITextFieldDelegate, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         searchTextField.delegate = self
-
         searchTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-        textFieldDidChange(searchTextField)
+        backButtonPressed(backButton)
         configureTableView()
     }
 
@@ -61,14 +61,14 @@ class AddContactViewController: UIViewController, UITextFieldDelegate, UITableVi
         contactsTableView.register(UINib(nibName: "ContactCell", bundle: nil), forCellReuseIdentifier: "contactCell")
     }
 
-    func refetchContact(contact: CNContact, atIndexPath indexPath: IndexPath) {
+    func refetchContact(contact: CNMutableContact, atIndexPath indexPath: IndexPath) {
         AppDelegate.getAppDelegate().requestForAccess { (accessGranted) -> Void in
             if accessGranted {
-                let keys = [CNContactFormatter.descriptorForRequiredKeys(for: CNContactFormatterStyle.fullName), CNContactImageDataKey, CNContactPhoneNumbersKey] as [Any]
+                let keys = [CNContactFormatter.descriptorForRequiredKeys(for: CNContactFormatterStyle.fullName), CNContactImageDataKey, CNContactPhoneNumbersKey, CNContactNoteKey] as [Any]
 
                 do {
                     let contactRefetched = try AppDelegate.getAppDelegate().contactStore.unifiedContact(withIdentifier: contact.identifier, keysToFetch: keys as! [CNKeyDescriptor])
-                    self.fetchedContacts[indexPath.row] = contactRefetched
+                    self.fetchedContacts[indexPath.row] = contactRefetched as! CNMutableContact
 
                     DispatchQueue.main.async(execute: { () -> Void in
                         self.contactsTableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
@@ -84,22 +84,23 @@ class AddContactViewController: UIViewController, UITextFieldDelegate, UITableVi
     func textFieldDidChange(_ textField: UITextField) {
         AppDelegate.getAppDelegate().requestForAccess { (accessGranted) -> Void in
             if accessGranted {
-                let predicate = CNContact.predicateForContacts(matchingName: self.searchTextField.text!)
-                let keys = [CNContactFormatter.descriptorForRequiredKeys(for: CNContactFormatterStyle.fullName), CNContactPhoneNumbersKey, CNContactImageDataKey] as [Any]
-                var contacts = [CNContact]()
+                let predicate = CNMutableContact.predicateForContacts(matchingName: self.searchTextField.text!)
+                let keys = [CNContactFormatter.descriptorForRequiredKeys(for: CNContactFormatterStyle.fullName), CNContactPhoneNumbersKey, CNContactImageDataKey,CNContactNoteKey] as [Any]
+                var contacts = [CNMutableContact]()
                 var message: String!
 
                 let contactsStore = AppDelegate.getAppDelegate().contactStore
                 do {
                     if self.searchTextField.text == ""{
                         let fetchRequest = CNContactFetchRequest(keysToFetch: keys as! [CNKeyDescriptor])
+                        fetchRequest.mutableObjects = true
                         try contactsStore.enumerateContacts(with: fetchRequest, usingBlock: { ( contact, stop) -> Void in
-                            contacts.append(contact)
+                            contacts.append(contact as! CNMutableContact)
                         })
 
                     }
                     else{
-                        contacts = try contactsStore.unifiedContacts(matching: predicate, keysToFetch: keys as! [CNKeyDescriptor])
+                        contacts = try contactsStore.unifiedContacts(matching: predicate, keysToFetch: keys as! [CNKeyDescriptor]) as! [CNMutableContact]
 
                     }
                     if contacts.count == 0 {
@@ -135,7 +136,7 @@ class AddContactViewController: UIViewController, UITextFieldDelegate, UITableVi
     // MARK: UITableViewDelegate function
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell:ContactCell = tableView.cellForRow(at: indexPath) as! ContactCell
-        var contactsArrayToDisplay:[CNContact] = []
+        var contactsArrayToDisplay:[CNMutableContact] = []
         if showOnlySelectedContacts {
             contactsArrayToDisplay = self.selectedContacts
         }
@@ -143,15 +144,17 @@ class AddContactViewController: UIViewController, UITextFieldDelegate, UITableVi
             contactsArrayToDisplay = self.fetchedContacts
         }
 
-        selectedContacts.append((contactsArrayToDisplay[indexPath.row]))
+        let contact = fetchedContacts[indexPath.row]
+        contact.note = "selected"
+        self.saveContact(contact: contact as! CNMutableContact)
+
         cell.selectedButton.titleLabel?.text = ""
         cell.selectedButton.setImage(UIImage(named: "check"), for: .normal)
-        view.layoutSubviews()
     }
 
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         let cell:ContactCell = tableView.cellForRow(at: indexPath) as! ContactCell
-        var contactsArrayToDisplay:[CNContact] = []
+        var contactsArrayToDisplay:[CNMutableContact] = []
         if showOnlySelectedContacts {
             contactsArrayToDisplay = self.selectedContacts
         }
@@ -159,15 +162,18 @@ class AddContactViewController: UIViewController, UITextFieldDelegate, UITableVi
             contactsArrayToDisplay = self.fetchedContacts
         }
 
-        contactsArrayToDisplay.remove(at: selectedContacts.index(of: contactsArrayToDisplay[indexPath.row])!)
+        let contact = fetchedContacts[indexPath.row]
+        contact.note = "notSelected"
+        self.saveContact(contact: contact )
+
         cell.selectedButton.titleLabel?.text = "+"
         cell.selectedButton.setImage(nil, for: .normal)
-        view.layoutSubviews()
     }
+
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "contactCell") as! ContactCell
-        var contactsArrayToDisplay:[CNContact] = []
+        var contactsArrayToDisplay:[CNMutableContact] = []
         if showOnlySelectedContacts {
             contactsArrayToDisplay = self.selectedContacts
         }
@@ -176,7 +182,16 @@ class AddContactViewController: UIViewController, UITextFieldDelegate, UITableVi
         }
 
         let currentContact = contactsArrayToDisplay[indexPath.row]
-
+        if currentContact.note == "selected" {
+            contactsTableView.selectRow(at: indexPath, animated: true, scrollPosition: UITableViewScrollPosition.none)
+            cell.selectedButton.titleLabel?.text = ""
+            cell.selectedButton.setImage(UIImage(named: "check"), for: .normal)
+        }
+        else{
+            contactsTableView.deselectRow(at: indexPath, animated: true)
+            cell.selectedButton.setImage(nil, for: .normal)
+            cell.selectedButton.titleLabel?.text = "+"
+        }
 
         // Set the Full Name
         cell.fullName.text = CNContactFormatter.string(from: currentContact, style: .fullName)
@@ -202,6 +217,16 @@ class AddContactViewController: UIViewController, UITextFieldDelegate, UITableVi
         return cell
     }
 
+    func saveContact(contact:CNMutableContact){
+        let request = CNSaveRequest()
+        request.update(contact)
+        do{
+            try AppDelegate.getAppDelegate().contactStore.execute(request)
+        } catch let error{
+            print(error)
+        }
+    }
+
     func getRandomColor() -> UIColor{
         let randomRed:CGFloat = CGFloat(drand48())
         let randomGreen:CGFloat = CGFloat(drand48())
@@ -210,12 +235,24 @@ class AddContactViewController: UIViewController, UITextFieldDelegate, UITableVi
 
     }
     @IBAction func selectAllButtonTapped(_ sender: Any) {
-        selectAllButton.setImage(UIImage(named: "checkedBox"), for: .normal)
-        for index in 0..<contactsTableView.numberOfRows(inSection: 0) {
-            let cell = contactsTableView.cellForRow(at: IndexPath(row: index, section: 0))
-            cell?.isSelected = true
-//            contactsTableView.selectRow(at: IndexPath(row: index, section: 0), animated: true, scrollPosition: UITableViewScrollPosition.top)
-//            cell?.setSelected(true, animated: true)
+        for index in 0..<fetchedContacts.count {
+        let currentContact = fetchedContacts[index]
+        if allSelected == false {
+            selectAllButton.setImage(UIImage(named: "checkedBox"), for: .normal)
+            currentContact.note = "selected"
+        }
+        else{
+            selectAllButton.setImage(UIImage(named: "uncheckedBox"), for: .normal)
+            currentContact.note = "unselected"
+            }
+            contactsTableView.reloadData()
+            saveContact(contact: currentContact)
+        }
+        if allSelected == true {
+            allSelected = false
+        }
+        else{
+            allSelected = true
         }
     }
 
@@ -228,6 +265,7 @@ class AddContactViewController: UIViewController, UITextFieldDelegate, UITableVi
             rightItemButton.setImage(UIImage(named: "refresh"), for: .normal)
             showOnlySelectedContacts = false
             textFieldDidChange(searchTextField)
+
             contactsTableView.reloadData()
         }
         else{
@@ -238,12 +276,21 @@ class AddContactViewController: UIViewController, UITextFieldDelegate, UITableVi
 
     @IBAction func backButtonPressed(_ sender: Any) {
         selectAllContactView.isHidden = true
-        searchTextField.text = "My contacts"
         searchTextField.placeholder = ""
         backButton.setImage(nil, for: .normal)
         rightItemButton.setImage(nil, for: .normal)
         rightItemButton.titleLabel?.text = "+"
         showOnlySelectedContacts = true
+        searchTextField.text = ""
+        textFieldDidChange(searchTextField)
+        var tempContacts:[CNMutableContact] = []
+        for contact in fetchedContacts {
+            if contact.note == "selected" {
+                tempContacts.append(contact)
+            }
+        }
+        selectedContacts = tempContacts
+        searchTextField.text = "My contacts"
         contactsTableView.reloadData()
     }
 }
