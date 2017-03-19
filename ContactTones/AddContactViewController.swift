@@ -16,22 +16,28 @@ protocol AddContactViewControllerDelegate {
     func didFetchContacts(_ contacts: [CNContact])
 }
 
-class AddContactViewController: UIViewController, UITextFieldDelegate, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource {
+class AddContactViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
+
+    var showOnlySelectedContacts = true
 
     var fetchedContacts:[CNContact] = []
     var selectedContacts:[CNContact] = []
     var delegate: AddContactViewControllerDelegate!
 
-    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var selectAllContactView: UIView!
+    @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var rightItemButton: UIButton!
+    @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var contactsTableView: UITableView!
+    @IBOutlet weak var searchTextField: UITextField!
 
-
+    @IBOutlet weak var selectAllButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchBar.delegate = self
-        let doneBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: #selector(AddContactViewController.performDoneItemTap))
-        navigationItem.rightBarButtonItem = doneBarButtonItem
-        searchBar(searchBar, textDidChange: "")
+        searchTextField.delegate = self
+
+        searchTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        textFieldDidChange(searchTextField)
         configureTableView()
     }
 
@@ -51,6 +57,7 @@ class AddContactViewController: UIViewController, UITextFieldDelegate, UISearchB
     func configureTableView() {
         contactsTableView.delegate = self
         contactsTableView.dataSource = self
+        contactsTableView.allowsMultipleSelection = true
         contactsTableView.register(UINib(nibName: "ContactCell", bundle: nil), forCellReuseIdentifier: "contactCell")
     }
 
@@ -74,18 +81,17 @@ class AddContactViewController: UIViewController, UITextFieldDelegate, UISearchB
         }
     }
 
-    // MARK: UISearchBarDelegate function
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+    func textFieldDidChange(_ textField: UITextField) {
         AppDelegate.getAppDelegate().requestForAccess { (accessGranted) -> Void in
             if accessGranted {
-                let predicate = CNContact.predicateForContacts(matchingName: self.searchBar.text!)
+                let predicate = CNContact.predicateForContacts(matchingName: self.searchTextField.text!)
                 let keys = [CNContactFormatter.descriptorForRequiredKeys(for: CNContactFormatterStyle.fullName), CNContactPhoneNumbersKey, CNContactImageDataKey] as [Any]
                 var contacts = [CNContact]()
                 var message: String!
 
                 let contactsStore = AppDelegate.getAppDelegate().contactStore
                 do {
-                    if self.searchBar.text == ""{
+                    if self.searchTextField.text == ""{
                         let fetchRequest = CNContactFetchRequest(keysToFetch: keys as! [CNKeyDescriptor])
                         try contactsStore.enumerateContacts(with: fetchRequest, usingBlock: { ( contact, stop) -> Void in
                             contacts.append(contact)
@@ -118,13 +124,59 @@ class AddContactViewController: UIViewController, UITextFieldDelegate, UISearchB
 
     // MARK: UITableViewDataSource function
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return fetchedContacts.count
+        if showOnlySelectedContacts {
+            return selectedContacts.count
+        }
+        else{
+            return fetchedContacts.count
+        }
     }
 
     // MARK: UITableViewDelegate function
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell:ContactCell = tableView.cellForRow(at: indexPath) as! ContactCell
+        var contactsArrayToDisplay:[CNContact] = []
+        if showOnlySelectedContacts {
+            contactsArrayToDisplay = self.selectedContacts
+        }
+        else{
+            contactsArrayToDisplay = self.fetchedContacts
+        }
+
+        selectedContacts.append((contactsArrayToDisplay[indexPath.row]))
+        cell.selectedButton.titleLabel?.text = ""
+        cell.selectedButton.setImage(UIImage(named: "check"), for: .normal)
+        view.layoutSubviews()
+    }
+
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        let cell:ContactCell = tableView.cellForRow(at: indexPath) as! ContactCell
+        var contactsArrayToDisplay:[CNContact] = []
+        if showOnlySelectedContacts {
+            contactsArrayToDisplay = self.selectedContacts
+        }
+        else{
+            contactsArrayToDisplay = self.fetchedContacts
+        }
+
+        contactsArrayToDisplay.remove(at: selectedContacts.index(of: contactsArrayToDisplay[indexPath.row])!)
+        cell.selectedButton.titleLabel?.text = "+"
+        cell.selectedButton.setImage(nil, for: .normal)
+        view.layoutSubviews()
+    }
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "contactCell") as! ContactCell
-        let currentContact = fetchedContacts[indexPath.row]
+        var contactsArrayToDisplay:[CNContact] = []
+        if showOnlySelectedContacts {
+            contactsArrayToDisplay = self.selectedContacts
+        }
+        else{
+            contactsArrayToDisplay = self.fetchedContacts
+        }
+
+        let currentContact = contactsArrayToDisplay[indexPath.row]
+
 
         // Set the Full Name
         cell.fullName.text = CNContactFormatter.string(from: currentContact, style: .fullName)
@@ -136,10 +188,62 @@ class AddContactViewController: UIViewController, UITextFieldDelegate, UISearchB
 
         // Set the Contact image.
         if let imageData = currentContact.imageData {
+            cell.contactImage.isHidden = false
+            cell.contactImageLabel.isHidden = true
             cell.contactImage.image = UIImage(data: imageData)
         }
-
+        else{
+            cell.contactImage.isHidden = true
+            cell.contactImageLabel.isHidden = false
+            cell.contactImageLabel.textColor = UIColor.white
+            cell.contactImageLabel.text = String(describing: cell.fullName.text![(cell.fullName.text!.startIndex)])
+            cell.contactImageLabel.backgroundColor = getRandomColor()
+        }
         return cell
     }
 
+    func getRandomColor() -> UIColor{
+        let randomRed:CGFloat = CGFloat(drand48())
+        let randomGreen:CGFloat = CGFloat(drand48())
+        let randomBlue:CGFloat = CGFloat(drand48())
+        return UIColor(red: randomRed, green: randomGreen, blue: randomBlue, alpha: 1.0)
+
+    }
+    @IBAction func selectAllButtonTapped(_ sender: Any) {
+        selectAllButton.setImage(UIImage(named: "checkedBox"), for: .normal)
+        for index in 0..<contactsTableView.numberOfRows(inSection: 0) {
+            let cell = contactsTableView.cellForRow(at: IndexPath(row: index, section: 0))
+            cell?.isSelected = true
+//            contactsTableView.selectRow(at: IndexPath(row: index, section: 0), animated: true, scrollPosition: UITableViewScrollPosition.top)
+//            cell?.setSelected(true, animated: true)
+        }
+    }
+
+    @IBAction func rightItemButtonPressed(_ sender: Any) {
+        if showOnlySelectedContacts {
+            selectAllContactView.isHidden = false
+            searchTextField.text = ""
+            searchTextField.placeholder = "Search contacts"
+            backButton.setImage(UIImage(named: "back"), for: .normal)
+            rightItemButton.setImage(UIImage(named: "refresh"), for: .normal)
+            showOnlySelectedContacts = false
+            textFieldDidChange(searchTextField)
+            contactsTableView.reloadData()
+        }
+        else{
+            // Refresh the tableview
+            textFieldDidChange(searchTextField)
+        }
+    }
+
+    @IBAction func backButtonPressed(_ sender: Any) {
+        selectAllContactView.isHidden = true
+        searchTextField.text = "My contacts"
+        searchTextField.placeholder = ""
+        backButton.setImage(nil, for: .normal)
+        rightItemButton.setImage(nil, for: .normal)
+        rightItemButton.titleLabel?.text = "+"
+        showOnlySelectedContacts = true
+        contactsTableView.reloadData()
+    }
 }

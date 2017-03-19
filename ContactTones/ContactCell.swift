@@ -10,12 +10,17 @@ import UIKit
 
 class ContactCell: UITableViewCell {
 
+    @IBOutlet weak var contactImageLabel: UILabel!
     @IBOutlet weak var fullName: UILabel!
     @IBOutlet weak var contactImage: UIImageView!
     @IBOutlet weak var phoneNumber: UILabel!
-
+    @IBOutlet weak var selectedButton: UIButton!
     override func awakeFromNib() {
         super.awakeFromNib()
+
+        let label = UILabel()
+        label.text = "+"
+        accessoryView?.addSubview(label)
         // Initialization code
     }
 

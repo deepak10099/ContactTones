@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "92F518E34BD0DCACB7D2DF081CBC1BDB83BD36D4",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "62BB7B7D5AB70B2E2CFD1365A39A88541FD23187" : 9223372036854775807,
+    "92F518E34BD0DCACB7D2DF081CBC1BDB83BD36D4" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "A18EDA04-B7DE-4E0A-9DEF-72946FC3F50D",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "62BB7B7D5AB70B2E2CFD1365A39A88541FD23187" : "",
+    "92F518E34BD0DCACB7D2DF081CBC1BDB83BD36D4" : "ContactTones\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "ContactTones",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "ContactTones.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/deepak10099\/Deepak-Ahuja.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "62BB7B7D5AB70B2E2CFD1365A39A88541FD23187"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/deepak10099\/ContactTones.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "92F518E34BD0DCACB7D2DF081CBC1BDB83BD36D4"
+    }
+  ]
+}

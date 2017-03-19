@@ -49,9 +49,6 @@ class CreateContactViewController: UIViewController, UITextFieldDelegate {
         let homeEmail = CNLabeledValue(label: CNLabelHome, value: txtHomeEmail.text! as NSString)
         newContact.emailAddresses = [homeEmail]
 
-        let birthdayComponents = (Calendar.current as NSCalendar).components([NSCalendar.Unit.year, NSCalendar.Unit.month, NSCalendar.Unit.day], from: datePicker.date)
-        newContact.birthday = birthdayComponents
-
         do {
             let saveRequest = CNSaveRequest()
             saveRequest.add(newContact, toContainerWithIdentifier: nil)
