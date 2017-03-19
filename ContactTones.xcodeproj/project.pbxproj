@@ -11,6 +11,10 @@
 		0099B21D1E7E0E4E00BDE502 /* checkedBox.png in Resources */ = {isa = PBXBuildFile; fileRef = 0099B21B1E7E0E4E00BDE502 /* checkedBox.png */; };
 		0099B21E1E7E0E4E00BDE502 /* uncheckedBox.png in Resources */ = {isa = PBXBuildFile; fileRef = 0099B21C1E7E0E4E00BDE502 /* uncheckedBox.png */; };
 		0099B2201E7E103F00BDE502 /* refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 0099B21F1E7E103F00BDE502 /* refresh.png */; };
+		0099B2291E7E9B8900BDE502 /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 0099B2251E7E9B8900BDE502 /* play.png */; };
+		0099B22A1E7E9B8900BDE502 /* record.png in Resources */ = {isa = PBXBuildFile; fileRef = 0099B2261E7E9B8900BDE502 /* record.png */; };
+		0099B22B1E7E9B8900BDE502 /* save.png in Resources */ = {isa = PBXBuildFile; fileRef = 0099B2271E7E9B8900BDE502 /* save.png */; };
+		0099B22C1E7E9B8900BDE502 /* stop.png in Resources */ = {isa = PBXBuildFile; fileRef = 0099B2281E7E9B8900BDE502 /* stop.png */; };
 		009F43321E7D26D30085C680 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009F43311E7D26D30085C680 /* AppDelegate.swift */; };
 		009F43371E7D26D30085C680 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 009F43351E7D26D30085C680 /* Main.storyboard */; };
 		009F433A1E7D26D30085C680 /* ContactTones.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 009F43381E7D26D30085C680 /* ContactTones.xcdatamodeld */; };
@@ -47,6 +51,10 @@
 		0099B21B1E7E0E4E00BDE502 /* checkedBox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkedBox.png; sourceTree = "<group>"; };
 		0099B21C1E7E0E4E00BDE502 /* uncheckedBox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = uncheckedBox.png; sourceTree = "<group>"; };
 		0099B21F1E7E103F00BDE502 /* refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = refresh.png; sourceTree = "<group>"; };
+		0099B2251E7E9B8900BDE502 /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play.png; sourceTree = "<group>"; };
+		0099B2261E7E9B8900BDE502 /* record.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = record.png; sourceTree = "<group>"; };
+		0099B2271E7E9B8900BDE502 /* save.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = save.png; sourceTree = "<group>"; };
+		0099B2281E7E9B8900BDE502 /* stop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stop.png; sourceTree = "<group>"; };
 		009F432E1E7D26D30085C680 /* ContactTones.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ContactTones.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		009F43311E7D26D30085C680 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		009F43361E7D26D30085C680 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -129,6 +137,10 @@
 				0099B21B1E7E0E4E00BDE502 /* checkedBox.png */,
 				0099B21C1E7E0E4E00BDE502 /* uncheckedBox.png */,
 				0099B21F1E7E103F00BDE502 /* refresh.png */,
+				0099B2251E7E9B8900BDE502 /* play.png */,
+				0099B2261E7E9B8900BDE502 /* record.png */,
+				0099B2271E7E9B8900BDE502 /* save.png */,
+				0099B2281E7E9B8900BDE502 /* stop.png */,
 				009F43351E7D26D30085C680 /* Main.storyboard */,
 			);
 			path = ContactTones;
@@ -260,12 +272,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				0099B21D1E7E0E4E00BDE502 /* checkedBox.png in Resources */,
+				0099B2291E7E9B8900BDE502 /* play.png in Resources */,
+				0099B22B1E7E9B8900BDE502 /* save.png in Resources */,
+				0099B22A1E7E9B8900BDE502 /* record.png in Resources */,
 				0078CB981E7DFC360010FBC8 /* check.png in Resources */,
 				009F433F1E7D26D30085C680 /* LaunchScreen.storyboard in Resources */,
 				009F43711E7DE0010085C680 /* back.png in Resources */,
 				009F433C1E7D26D30085C680 /* Assets.xcassets in Resources */,
 				009F43371E7D26D30085C680 /* Main.storyboard in Resources */,
 				0099B21E1E7E0E4E00BDE502 /* uncheckedBox.png in Resources */,
+				0099B22C1E7E9B8900BDE502 /* stop.png in Resources */,
 				0099B2201E7E103F00BDE502 /* refresh.png in Resources */,
 				009F43691E7DA8250085C680 /* ContactCell.xib in Resources */,
 			);

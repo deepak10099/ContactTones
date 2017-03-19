@@ -135,32 +135,25 @@ class AddContactViewController: UIViewController, UITextFieldDelegate, UITableVi
 
     // MARK: UITableViewDelegate function
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell:ContactCell = tableView.cellForRow(at: indexPath) as! ContactCell
-        var contactsArrayToDisplay:[CNMutableContact] = []
         if showOnlySelectedContacts {
-            contactsArrayToDisplay = self.selectedContacts
-        }
-        else{
-            contactsArrayToDisplay = self.fetchedContacts
+            return
         }
 
+        let cell:ContactCell = tableView.cellForRow(at: indexPath) as! ContactCell
         let contact = fetchedContacts[indexPath.row]
         contact.note = "selected"
-        self.saveContact(contact: contact as! CNMutableContact)
+        self.saveContact(contact: contact )
 
         cell.selectedButton.titleLabel?.text = ""
         cell.selectedButton.setImage(UIImage(named: "check"), for: .normal)
     }
 
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        let cell:ContactCell = tableView.cellForRow(at: indexPath) as! ContactCell
-        var contactsArrayToDisplay:[CNMutableContact] = []
         if showOnlySelectedContacts {
-            contactsArrayToDisplay = self.selectedContacts
+            return
         }
-        else{
-            contactsArrayToDisplay = self.fetchedContacts
-        }
+
+        let cell:ContactCell = tableView.cellForRow(at: indexPath) as! ContactCell
 
         let contact = fetchedContacts[indexPath.row]
         contact.note = "notSelected"
@@ -173,25 +166,31 @@ class AddContactViewController: UIViewController, UITextFieldDelegate, UITableVi
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "contactCell") as! ContactCell
+        cell.selectionStyle = .none
         var contactsArrayToDisplay:[CNMutableContact] = []
         if showOnlySelectedContacts {
             contactsArrayToDisplay = self.selectedContacts
+            cell.playPause.isHidden = false
+            cell.selectedButton.setImage(UIImage(named: "record"), for: .normal)
         }
         else{
             contactsArrayToDisplay = self.fetchedContacts
+            let currentContact = contactsArrayToDisplay[indexPath.row]
+            if currentContact.note == "selected" {
+                contactsTableView.selectRow(at: indexPath, animated: true, scrollPosition: UITableViewScrollPosition.none)
+                cell.selectedButton.titleLabel?.text = ""
+                cell.selectedButton.setImage(UIImage(named: "check"), for: .normal)
+            }
+            else{
+                contactsTableView.deselectRow(at: indexPath, animated: true)
+                cell.selectedButton.setImage(nil, for: .normal)
+                cell.selectedButton.titleLabel?.text = "+"
+            }
+
+            cell.playPause.isHidden = true
         }
 
         let currentContact = contactsArrayToDisplay[indexPath.row]
-        if currentContact.note == "selected" {
-            contactsTableView.selectRow(at: indexPath, animated: true, scrollPosition: UITableViewScrollPosition.none)
-            cell.selectedButton.titleLabel?.text = ""
-            cell.selectedButton.setImage(UIImage(named: "check"), for: .normal)
-        }
-        else{
-            contactsTableView.deselectRow(at: indexPath, animated: true)
-            cell.selectedButton.setImage(nil, for: .normal)
-            cell.selectedButton.titleLabel?.text = "+"
-        }
 
         // Set the Full Name
         cell.fullName.text = CNContactFormatter.string(from: currentContact, style: .fullName)
@@ -259,6 +258,8 @@ class AddContactViewController: UIViewController, UITextFieldDelegate, UITableVi
     @IBAction func rightItemButtonPressed(_ sender: Any) {
         if showOnlySelectedContacts {
             selectAllContactView.isHidden = false
+            contactsTableView.allowsSelectionDuringEditing = false
+            contactsTableView.allowsSelection = true
             searchTextField.text = ""
             searchTextField.placeholder = "Search contacts"
             backButton.setImage(UIImage(named: "back"), for: .normal)
@@ -277,6 +278,8 @@ class AddContactViewController: UIViewController, UITextFieldDelegate, UITableVi
     @IBAction func backButtonPressed(_ sender: Any) {
         selectAllContactView.isHidden = true
         searchTextField.placeholder = ""
+        contactsTableView.allowsSelectionDuringEditing = false
+        contactsTableView.allowsSelection = false
         backButton.setImage(nil, for: .normal)
         rightItemButton.setImage(nil, for: .normal)
         rightItemButton.titleLabel?.text = "+"

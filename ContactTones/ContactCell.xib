@@ -58,15 +58,29 @@
                         </userDefinedRuntimeAttributes>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v8x-e2-hAx">
-                        <rect key="frame" x="288" y="41.5" width="15" height="15"/>
+                        <rect key="frame" x="278" y="37.5" width="25" height="25"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="15" id="XFe-1B-qZV"/>
-                            <constraint firstAttribute="height" constant="15" id="kr2-wz-kLE"/>
+                            <constraint firstAttribute="width" constant="25" id="XFe-1B-qZV"/>
+                            <constraint firstAttribute="height" constant="25" id="kr2-wz-kLE"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="35"/>
                         <state key="normal" title="+">
                             <color key="titleColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
                         </state>
+                        <connections>
+                            <action selector="recordSaveButtonTapped:" destination="VQX-SS-fj0" eventType="touchUpInside" id="rd7-MA-Pfc"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E2q-tc-Uuz">
+                        <rect key="frame" x="238" y="37.5" width="25" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="25" id="CrI-OI-aiT"/>
+                            <constraint firstAttribute="width" constant="25" id="sRk-66-fPb"/>
+                        </constraints>
+                        <state key="normal" title="+" image="play.png"/>
+                        <connections>
+                            <action selector="playPauseButtonTapped:" destination="VQX-SS-fj0" eventType="touchUpInside" id="fhg-hA-oKV"/>
+                        </connections>
                     </button>
                 </subviews>
                 <constraints>
@@ -80,9 +94,11 @@
                     <constraint firstItem="oo7-cM-mPH" firstAttribute="leading" secondItem="4H4-gH-qIB" secondAttribute="leadingMargin" constant="15" id="bjK-Vp-vlE"/>
                     <constraint firstItem="IL1-2K-CCw" firstAttribute="top" secondItem="oo7-cM-mPH" secondAttribute="top" id="csG-w0-H1b"/>
                     <constraint firstItem="Aq8-21-a6v" firstAttribute="height" secondItem="IL1-2K-CCw" secondAttribute="height" id="esd-5p-Sph"/>
+                    <constraint firstItem="E2q-tc-Uuz" firstAttribute="centerY" secondItem="4H4-gH-qIB" secondAttribute="centerY" id="g5g-Qg-LoA"/>
                     <constraint firstItem="Aq8-21-a6v" firstAttribute="top" secondItem="IL1-2K-CCw" secondAttribute="bottom" constant="5" id="kHS-gb-U4g"/>
                     <constraint firstItem="Aq8-21-a6v" firstAttribute="width" secondItem="IL1-2K-CCw" secondAttribute="width" id="kwM-KW-xrc"/>
                     <constraint firstItem="oo7-cM-mPH" firstAttribute="top" secondItem="4H4-gH-qIB" secondAttribute="topMargin" constant="17" id="qcY-df-y4t"/>
+                    <constraint firstItem="v8x-e2-hAx" firstAttribute="leading" secondItem="E2q-tc-Uuz" secondAttribute="trailing" constant="15" id="sbn-9E-lcO"/>
                     <constraint firstItem="Otn-p5-tH0" firstAttribute="height" secondItem="oo7-cM-mPH" secondAttribute="height" id="u6L-ts-8ay"/>
                     <constraint firstItem="IL1-2K-CCw" firstAttribute="trailing" secondItem="4H4-gH-qIB" secondAttribute="trailingMargin" id="wLx-OL-eyK"/>
                 </constraints>
@@ -93,9 +109,13 @@
                 <outlet property="contactImageLabel" destination="Otn-p5-tH0" id="sfp-MA-XBB"/>
                 <outlet property="fullName" destination="IL1-2K-CCw" id="0Xy-92-Z3t"/>
                 <outlet property="phoneNumber" destination="Aq8-21-a6v" id="vPA-Ny-5uC"/>
+                <outlet property="playPause" destination="E2q-tc-Uuz" id="uDt-T6-E7g"/>
                 <outlet property="selectedButton" destination="v8x-e2-hAx" id="Mm8-oI-fkC"/>
             </connections>
             <point key="canvasLocation" x="444" y="366"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="play.png" width="128" height="128"/>
+    </resources>
 </document>

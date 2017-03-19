@@ -15,6 +15,7 @@ class ContactCell: UITableViewCell {
     @IBOutlet weak var contactImage: UIImageView!
     @IBOutlet weak var phoneNumber: UILabel!
     @IBOutlet weak var selectedButton: UIButton!
+    @IBOutlet weak var playPause: UIButton!
     override func awakeFromNib() {
         super.awakeFromNib()
 
@@ -24,6 +25,14 @@ class ContactCell: UITableViewCell {
         // Initialization code
     }
 
+    @IBAction func playPauseButtonTapped(_ sender: Any) {
+
+    }
+
+    @IBAction func recordSaveButtonTapped(_ sender: Any) {
+        
+    }
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
