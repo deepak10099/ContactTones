@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0036F3011E7F347F0060734E /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 0036F3001E7F347F0060734E /* menu.png */; };
+		0036F3031E7F46500060734E /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 0036F3021E7F46500060734E /* menu.png */; };
 		0078CB981E7DFC360010FBC8 /* check.png in Resources */ = {isa = PBXBuildFile; fileRef = 0078CB971E7DFC360010FBC8 /* check.png */; };
 		0099B21D1E7E0E4E00BDE502 /* checkedBox.png in Resources */ = {isa = PBXBuildFile; fileRef = 0099B21B1E7E0E4E00BDE502 /* checkedBox.png */; };
 		0099B21E1E7E0E4E00BDE502 /* uncheckedBox.png in Resources */ = {isa = PBXBuildFile; fileRef = 0099B21C1E7E0E4E00BDE502 /* uncheckedBox.png */; };
@@ -48,7 +48,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0036F3001E7F347F0060734E /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
+		0036F3021E7F46500060734E /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
 		0078CB971E7DFC360010FBC8 /* check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = check.png; sourceTree = "<group>"; };
 		0099B21B1E7E0E4E00BDE502 /* checkedBox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkedBox.png; sourceTree = "<group>"; };
 		0099B21C1E7E0E4E00BDE502 /* uncheckedBox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = uncheckedBox.png; sourceTree = "<group>"; };
@@ -143,7 +143,7 @@
 				0099B2261E7E9B8900BDE502 /* record.png */,
 				0099B2271E7E9B8900BDE502 /* save.png */,
 				0099B2281E7E9B8900BDE502 /* stop.png */,
-				0036F3001E7F347F0060734E /* menu.png */,
+				0036F3021E7F46500060734E /* menu.png */,
 				009F43351E7D26D30085C680 /* Main.storyboard */,
 			);
 			path = ContactTones;
@@ -278,7 +278,7 @@
 				0099B2291E7E9B8900BDE502 /* play.png in Resources */,
 				0099B22B1E7E9B8900BDE502 /* save.png in Resources */,
 				0099B22A1E7E9B8900BDE502 /* record.png in Resources */,
-				0036F3011E7F347F0060734E /* menu.png in Resources */,
+				0036F3031E7F46500060734E /* menu.png in Resources */,
 				0078CB981E7DFC360010FBC8 /* check.png in Resources */,
 				009F433F1E7D26D30085C680 /* LaunchScreen.storyboard in Resources */,
 				009F43711E7DE0010085C680 /* back.png in Resources */,

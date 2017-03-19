@@ -17,8 +17,10 @@ class CreateContactViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var txtHomeEmail: UITextField!
     @IBOutlet weak var datePicker: UIDatePicker!
 
+
     override func viewDidLoad() {
         super.viewDidLoad()
+
         txtFirstname.delegate = self
         txtLastname.delegate = self
         txtHomeEmail.delegate = self

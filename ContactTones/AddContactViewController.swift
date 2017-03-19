@@ -16,6 +16,21 @@ protocol AddContactViewControllerDelegate {
     func didFetchContacts(_ contacts: [CNMutableContact])
 }
 
+
+extension UIColor {
+    convenience init(red: Int, green: Int, blue: Int) {
+        assert(red >= 0 && red <= 255, "Invalid red component")
+        assert(green >= 0 && green <= 255, "Invalid green component")
+        assert(blue >= 0 && blue <= 255, "Invalid blue component")
+
+        self.init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: 1.0)
+    }
+
+    convenience init(netHex:Int) {
+        self.init(red:(netHex >> 16) & 0xff, green:(netHex >> 8) & 0xff, blue:netHex & 0xff)
+    }
+}
+
 class AddContactViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, AVAudioPlayerDelegate, AVAudioRecorderDelegate {
 
     var playBlock:((Bool) -> Void)?
@@ -42,7 +57,7 @@ class AddContactViewController: UIViewController, UITextFieldDelegate, UITableVi
         super.viewDidLoad()
         searchTextField.delegate = self
         searchTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-        backButtonPressed(backButton)
+        configureFirstVC()
         configureTableView()
     }
 
@@ -315,8 +330,8 @@ class AddContactViewController: UIViewController, UITextFieldDelegate, UITableVi
             rightItemButton.setImage(UIImage(named: "refresh"), for: .normal)
             showOnlySelectedContacts = false
             textFieldDidChange(searchTextField)
-
             contactsTableView.reloadData()
+            headerView.backgroundColor = UIColor.white
         }
         else{
             // Refresh the tableview
@@ -324,34 +339,47 @@ class AddContactViewController: UIViewController, UITextFieldDelegate, UITableVi
         }
     }
 
-    @IBAction func backButtonPressed(_ sender: Any) {
-        if let containerheightConstraint = containerheightForFetchedContactsConstraint{
-            containerheightConstraint.isActive = false
-        }
-        containerheightForSelectedContactsConstraint = NSLayoutConstraint(item: containerView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 90)
-        containerView.addConstraint(containerheightForSelectedContactsConstraint!)
-        containerView.translatesAutoresizingMaskIntoConstraints = false
-        containerView.layoutSubviews()
-
-        selectAllContactView.isHidden = true
-        searchTextField.placeholder = ""
-        contactsTableView.allowsSelectionDuringEditing = false
-        contactsTableView.allowsSelection = false
-        backButton.setImage(UIImage(named: "menu"), for: .normal)
-        rightItemButton.setImage(nil, for: .normal)
-        rightItemButton.titleLabel?.text = "+"
-        showOnlySelectedContacts = true
-        searchTextField.text = ""
-        textFieldDidChange(searchTextField)
-        var tempContacts:[CNMutableContact] = []
-        for contact in fetchedContacts {
-            if contact.note == "selected" {
-                tempContacts.append(contact)
+    func configureFirstVC()
+    {
+            if let containerheightConstraint = containerheightForFetchedContactsConstraint{
+                containerheightConstraint.isActive = false
             }
+            containerheightForSelectedContactsConstraint = NSLayoutConstraint(item: containerView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 90)
+            containerView.addConstraint(containerheightForSelectedContactsConstraint!)
+            containerView.translatesAutoresizingMaskIntoConstraints = false
+            containerView.layoutSubviews()
+
+            selectAllContactView.isHidden = true
+            searchTextField.placeholder = ""
+            contactsTableView.allowsSelectionDuringEditing = false
+            contactsTableView.allowsSelection = false
+            backButton.setImage(UIImage(named: "menu"), for: .normal)
+            rightItemButton.setImage(nil, for: .normal)
+            rightItemButton.titleLabel?.text = "+"
+            showOnlySelectedContacts = true
+            searchTextField.text = ""
+            textFieldDidChange(searchTextField)
+            var tempContacts:[CNMutableContact] = []
+            for contact in fetchedContacts {
+                if contact.note == "selected" {
+                    tempContacts.append(contact)
+                }
+            }
+            selectedContacts = tempContacts
+            searchTextField.text = "My contacts"
+            contactsTableView.reloadData()
+            headerView.backgroundColor = UIColor(netHex:0xF9C901)
         }
-        selectedContacts = tempContacts
-        searchTextField.text = "My contacts"
-        contactsTableView.reloadData()
+
+    @IBAction func backButtonPressed(_ sender: Any) {
+        if showOnlySelectedContacts {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "createVC")
+            present(vc, animated: true, completion: nil)
+        }
+        else{
+            configureFirstVC()
+        }
     }
 
     // MARK: AVAudioPlayerDelegate function
