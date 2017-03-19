@@ -11,6 +11,9 @@ import AVFoundation
 
 class ContactCell: UITableViewCell {
 
+    var playBlock:((Bool) -> Void)?
+    var recordBlock:((Bool) -> Void)?
+
     weak var delegate:AddContactViewController?
     @IBOutlet weak var contactImageLabel: UILabel!
     @IBOutlet weak var fullName: UILabel!
@@ -32,13 +35,13 @@ class ContactCell: UITableViewCell {
             playPause.setImage(UIImage(named: "stop"), for: .normal)
             playPause.tag = 1
             selectedButton.isEnabled = false
-            delegate?.play(true)
+            playBlock!(true)
         }
         else{
             playPause.setImage(UIImage(named: "play"), for: .normal)
             playPause.tag = 0
             selectedButton.isEnabled = true
-            delegate?.play(false)
+            playBlock!(false)
         }
     }
 
@@ -47,13 +50,13 @@ class ContactCell: UITableViewCell {
             playPause.isEnabled = false
             selectedButton.setImage(UIImage(named: "save"), for: .normal)
             selectedButton.tag = 1
-            delegate?.record(true)
+            recordBlock!(true)
         }
         else{
             playPause.isEnabled = true
             selectedButton.setImage(UIImage(named: "record"), for: .normal)
             selectedButton.tag = 0
-            delegate?.record(false)
+            recordBlock!(false)
         }
     }
 

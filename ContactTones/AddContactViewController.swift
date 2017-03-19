@@ -18,6 +18,7 @@ protocol AddContactViewControllerDelegate {
 
 class AddContactViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, AVAudioPlayerDelegate, AVAudioRecorderDelegate {
 
+    var playBlock:((Bool) -> Void)?
     var showOnlySelectedContacts = true
     var allSelected:Bool = false
     var fetchedContacts:[CNMutableContact] = []
@@ -40,7 +41,6 @@ class AddContactViewController: UIViewController, UITextFieldDelegate, UITableVi
         searchTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         backButtonPressed(backButton)
         configureTableView()
-        initialiseAudioPlayerAndRecorder()
     }
 
     override func didReceiveMemoryWarning() {
@@ -179,6 +179,7 @@ class AddContactViewController: UIViewController, UITextFieldDelegate, UITableVi
         else{
             contactsArrayToDisplay = self.fetchedContacts
             let currentContact = contactsArrayToDisplay[indexPath.row]
+
             if currentContact.note == "selected" {
                 contactsTableView.selectRow(at: indexPath, animated: true, scrollPosition: UITableViewScrollPosition.none)
                 cell.selectedButton.titleLabel?.text = ""
@@ -194,7 +195,11 @@ class AddContactViewController: UIViewController, UITextFieldDelegate, UITableVi
         }
 
         let currentContact = contactsArrayToDisplay[indexPath.row]
+        let playBlock = initialisePlayBlockWithFileName(file: currentContact.identifier)
+        let recordBlock = initialiseRecordBlockWithFileName(file: currentContact.identifier)
 
+        cell.playBlock = playBlock
+        cell.recordBlock = recordBlock
         // Set the Full Name
         cell.fullName.text = CNContactFormatter.string(from: currentContact, style: .fullName)
 
@@ -236,13 +241,13 @@ class AddContactViewController: UIViewController, UITextFieldDelegate, UITableVi
         return UIColor(red: randomRed, green: randomGreen, blue: randomBlue, alpha: 1.0)
     }
 
-    func initialiseAudioPlayerAndRecorder(){
+    func initialiseRecorder(fileName:String){
         let fileMgr = FileManager.default
 
         let dirPaths = fileMgr.urls(for: .documentDirectory,
                                     in: .userDomainMask)
 
-        let soundFileURL = dirPaths[0].appendingPathComponent("sound.caf")
+        let soundFileURL = dirPaths[0].appendingPathComponent("\(fileName).caf")
 
         let recordSettings =
             [AVEncoderAudioQualityKey: AVAudioQuality.min.rawValue,
@@ -350,18 +355,21 @@ class AddContactViewController: UIViewController, UITextFieldDelegate, UITableVi
         print("Audio Record Encode Error")
     }
 
-
-
-    func play(_ play: Bool) {
+    func initialisePlayBlockWithFileName(file:String) -> ((Bool) -> Void) {
+        let playBlock:((Bool) -> Void) = { play in
         // PLAY
         if play {
-            if audioRecorder?.isRecording == false {
+            if self.audioRecorder?.isRecording == false {
                 do {
-                    try audioPlayer = AVAudioPlayer(contentsOf:
-                        (audioRecorder?.url)!)
-                    audioPlayer!.delegate = self
-                    audioPlayer!.prepareToPlay()
-                    audioPlayer!.play()
+                    let fileMgr = FileManager.default
+                    let dirPaths = fileMgr.urls(for: .documentDirectory,
+                                                in: .userDomainMask)
+                    let soundFileURL = dirPaths[0].appendingPathComponent("\(file).caf")
+
+                    try self.audioPlayer = AVAudioPlayer(contentsOf:soundFileURL)
+                    self.audioPlayer!.delegate = self
+                    self.audioPlayer!.prepareToPlay()
+                    self.audioPlayer!.play()
                 } catch let error as NSError {
                     print("audioPlayer error: \(error.localizedDescription)")
                 }
@@ -369,23 +377,31 @@ class AddContactViewController: UIViewController, UITextFieldDelegate, UITableVi
         }
         else{
             //STOP
-            if (audioRecorder?.isRecording == false) {
-                audioPlayer?.stop()
-            }}
+            if (self.audioRecorder?.isRecording == false) {
+                self.audioPlayer?.stop()
+            }
+        }
+        }
+        return playBlock
     }
-    
-    func record(_ record: Bool) {
+
+    func initialiseRecordBlockWithFileName(file:String) -> ((Bool) -> Void) {
+        let recordBlock:((Bool) -> Void) = {
+            record in
         //RECORD
         if record {
-            if audioRecorder?.isRecording == false {
-                audioRecorder?.record()
+            self.initialiseRecorder(fileName: file)
+            if self.audioRecorder?.isRecording == false {
+                self.audioRecorder?.record()
             }
         }
         else{
             // STOP
-            if audioRecorder?.isRecording == true {
-                audioRecorder?.stop()
+            if self.audioRecorder?.isRecording == true {
+                self.audioRecorder?.stop()
             }
-        }
+    }
+}
+        return recordBlock
     }
 }
