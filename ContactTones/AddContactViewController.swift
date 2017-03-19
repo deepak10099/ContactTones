@@ -10,20 +10,21 @@
 import UIKit
 import Contacts
 import ContactsUI
-
+import AVFoundation
 
 protocol AddContactViewControllerDelegate {
     func didFetchContacts(_ contacts: [CNMutableContact])
 }
 
-class AddContactViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
+class AddContactViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, AVAudioPlayerDelegate, AVAudioRecorderDelegate {
 
     var showOnlySelectedContacts = true
-
     var allSelected:Bool = false
     var fetchedContacts:[CNMutableContact] = []
     var selectedContacts:[CNMutableContact] = []
     var delegate: AddContactViewControllerDelegate!
+    var audioPlayer: AVAudioPlayer?
+    var audioRecorder: AVAudioRecorder?
 
     @IBOutlet weak var selectAllContactView: UIView!
     @IBOutlet weak var headerView: UIView!
@@ -39,6 +40,7 @@ class AddContactViewController: UIViewController, UITextFieldDelegate, UITableVi
         searchTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         backButtonPressed(backButton)
         configureTableView()
+        initialiseAudioPlayerAndRecorder()
     }
 
     override func didReceiveMemoryWarning() {
@@ -166,6 +168,7 @@ class AddContactViewController: UIViewController, UITextFieldDelegate, UITableVi
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "contactCell") as! ContactCell
+        cell.delegate = self
         cell.selectionStyle = .none
         var contactsArrayToDisplay:[CNMutableContact] = []
         if showOnlySelectedContacts {
@@ -231,18 +234,50 @@ class AddContactViewController: UIViewController, UITextFieldDelegate, UITableVi
         let randomGreen:CGFloat = CGFloat(drand48())
         let randomBlue:CGFloat = CGFloat(drand48())
         return UIColor(red: randomRed, green: randomGreen, blue: randomBlue, alpha: 1.0)
-
     }
+
+    func initialiseAudioPlayerAndRecorder(){
+        let fileMgr = FileManager.default
+
+        let dirPaths = fileMgr.urls(for: .documentDirectory,
+                                    in: .userDomainMask)
+
+        let soundFileURL = dirPaths[0].appendingPathComponent("sound.caf")
+
+        let recordSettings =
+            [AVEncoderAudioQualityKey: AVAudioQuality.min.rawValue,
+             AVEncoderBitRateKey: 16,
+             AVNumberOfChannelsKey: 2,
+             AVSampleRateKey: 44100.0] as [String : Any]
+
+        let audioSession = AVAudioSession.sharedInstance()
+
+        do {
+            try audioSession.setCategory(
+                AVAudioSessionCategoryPlayAndRecord)
+        } catch let error as NSError {
+            print("audioSession error: \(error.localizedDescription)")
+        }
+
+        do {
+            try audioRecorder = AVAudioRecorder(url: soundFileURL,
+                                                settings: recordSettings as [String : AnyObject])
+            audioRecorder?.prepareToRecord()
+        } catch let error as NSError {
+            print("audioSession error: \(error.localizedDescription)")
+        }
+    }
+
     @IBAction func selectAllButtonTapped(_ sender: Any) {
         for index in 0..<fetchedContacts.count {
-        let currentContact = fetchedContacts[index]
-        if allSelected == false {
-            selectAllButton.setImage(UIImage(named: "checkedBox"), for: .normal)
-            currentContact.note = "selected"
-        }
-        else{
-            selectAllButton.setImage(UIImage(named: "uncheckedBox"), for: .normal)
-            currentContact.note = "unselected"
+            let currentContact = fetchedContacts[index]
+            if allSelected == false {
+                selectAllButton.setImage(UIImage(named: "checkedBox"), for: .normal)
+                currentContact.note = "selected"
+            }
+            else{
+                selectAllButton.setImage(UIImage(named: "uncheckedBox"), for: .normal)
+                currentContact.note = "unselected"
             }
             contactsTableView.reloadData()
             saveContact(contact: currentContact)
@@ -295,5 +330,62 @@ class AddContactViewController: UIViewController, UITextFieldDelegate, UITableVi
         selectedContacts = tempContacts
         searchTextField.text = "My contacts"
         contactsTableView.reloadData()
+    }
+
+    // MARK: AVAudioPlayerDelegate function
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        //        recordButton.isEnabled = true
+        //        stopButton.isEnabled = false
+    }
+
+    func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
+        print("Audio Play Decode Error")
+    }
+
+    // MARK: AVAudioRecorderDelegate function
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
+    }
+
+    func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
+        print("Audio Record Encode Error")
+    }
+
+
+
+    func play(_ play: Bool) {
+        // PLAY
+        if play {
+            if audioRecorder?.isRecording == false {
+                do {
+                    try audioPlayer = AVAudioPlayer(contentsOf:
+                        (audioRecorder?.url)!)
+                    audioPlayer!.delegate = self
+                    audioPlayer!.prepareToPlay()
+                    audioPlayer!.play()
+                } catch let error as NSError {
+                    print("audioPlayer error: \(error.localizedDescription)")
+                }
+            }
+        }
+        else{
+            //STOP
+            if (audioRecorder?.isRecording == false) {
+                audioPlayer?.stop()
+            }}
+    }
+    
+    func record(_ record: Bool) {
+        //RECORD
+        if record {
+            if audioRecorder?.isRecording == false {
+                audioRecorder?.record()
+            }
+        }
+        else{
+            // STOP
+            if audioRecorder?.isRecording == true {
+                audioRecorder?.stop()
+            }
+        }
     }
 }
