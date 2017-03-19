@@ -27,6 +27,9 @@ class AddContactViewController: UIViewController, UITextFieldDelegate, UITableVi
     var audioPlayer: AVAudioPlayer?
     var audioRecorder: AVAudioRecorder?
 
+    @IBOutlet weak var containerView: UIView!
+    var containerheightForSelectedContactsConstraint: NSLayoutConstraint?
+    var containerheightForFetchedContactsConstraint:NSLayoutConstraint?
     @IBOutlet weak var selectAllContactView: UIView!
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var rightItemButton: UIButton!
@@ -297,6 +300,12 @@ class AddContactViewController: UIViewController, UITextFieldDelegate, UITableVi
 
     @IBAction func rightItemButtonPressed(_ sender: Any) {
         if showOnlySelectedContacts {
+            if let containerheightConstraint = containerheightForSelectedContactsConstraint{
+                containerheightConstraint.isActive = false
+            }
+            containerheightForSelectedContactsConstraint = NSLayoutConstraint(item: containerView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 140)
+            containerView.addConstraint(containerheightForSelectedContactsConstraint!)
+            containerView.layoutSubviews()
             selectAllContactView.isHidden = false
             contactsTableView.allowsSelectionDuringEditing = false
             contactsTableView.allowsSelection = true
@@ -316,11 +325,19 @@ class AddContactViewController: UIViewController, UITextFieldDelegate, UITableVi
     }
 
     @IBAction func backButtonPressed(_ sender: Any) {
+        if let containerheightConstraint = containerheightForFetchedContactsConstraint{
+            containerheightConstraint.isActive = false
+        }
+        containerheightForSelectedContactsConstraint = NSLayoutConstraint(item: containerView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 90)
+        containerView.addConstraint(containerheightForSelectedContactsConstraint!)
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        containerView.layoutSubviews()
+
         selectAllContactView.isHidden = true
         searchTextField.placeholder = ""
         contactsTableView.allowsSelectionDuringEditing = false
         contactsTableView.allowsSelection = false
-        backButton.setImage(nil, for: .normal)
+        backButton.setImage(UIImage(named: "menu"), for: .normal)
         rightItemButton.setImage(nil, for: .normal)
         rightItemButton.titleLabel?.text = "+"
         showOnlySelectedContacts = true

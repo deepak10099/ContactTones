@@ -13,17 +13,12 @@ import Contacts
 class CreateContactViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var txtFirstname: UITextField!
-
     @IBOutlet weak var txtLastname: UITextField!
-
     @IBOutlet weak var txtHomeEmail: UITextField!
-
     @IBOutlet weak var datePicker: UIDatePicker!
-
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         txtFirstname.delegate = self
         txtLastname.delegate = self
         txtHomeEmail.delegate = self
@@ -61,9 +56,7 @@ class CreateContactViewController: UIViewController, UITextFieldDelegate {
         }
     }
 
-
     // MARK: UITextFieldDelegate functions
-
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
