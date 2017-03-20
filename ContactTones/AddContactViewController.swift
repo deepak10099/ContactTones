@@ -322,8 +322,6 @@ class AddContactViewController: UIViewController, UITextFieldDelegate, UITableVi
             containerView.addConstraint(containerheightForSelectedContactsConstraint!)
             containerView.layoutSubviews()
             selectAllContactView.isHidden = false
-            contactsTableView.allowsSelectionDuringEditing = false
-            contactsTableView.allowsSelection = true
             searchTextField.text = ""
             searchTextField.placeholder = "Search contacts"
             backButton.setImage(UIImage(named: "back"), for: .normal)
@@ -351,8 +349,6 @@ class AddContactViewController: UIViewController, UITextFieldDelegate, UITableVi
 
             selectAllContactView.isHidden = true
             searchTextField.placeholder = ""
-            contactsTableView.allowsSelectionDuringEditing = false
-            contactsTableView.allowsSelection = false
             backButton.setImage(UIImage(named: "menu"), for: .normal)
             rightItemButton.setImage(nil, for: .normal)
             rightItemButton.titleLabel?.text = "+"
