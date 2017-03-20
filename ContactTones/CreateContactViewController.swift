@@ -10,23 +10,21 @@
 import UIKit
 import Contacts
 
-class CreateContactViewController: UIViewController, UITextFieldDelegate {
+class CreateContactViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
+    @IBOutlet weak var imageView: UIImageView!
+    var imageData:Data?
     @IBOutlet weak var txtFirstname: UITextField!
     @IBOutlet weak var txtLastname: UITextField!
-    @IBOutlet weak var txtHomeEmail: UITextField!
-    @IBOutlet weak var datePicker: UIDatePicker!
-
+    @IBOutlet weak var phoneNumber: UITextField!
+    @IBOutlet weak var pictureImageView: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         txtFirstname.delegate = self
         txtLastname.delegate = self
-        txtHomeEmail.delegate = self
-
-        let saveBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.save, target: self, action: #selector(CreateContactViewController.createContact))
-        navigationItem.rightBarButtonItem = saveBarButtonItem
+        phoneNumber.delegate = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -37,21 +35,24 @@ class CreateContactViewController: UIViewController, UITextFieldDelegate {
 
     // MARK: Custom functions
 
+    @IBAction func saveButtonTapped(_ sender: Any) {
+        createContact()
+    }
+
     func createContact() {
         let newContact = CNMutableContact()
 
         newContact.givenName = txtFirstname.text!
         newContact.familyName = txtLastname.text!
-
-        let homeEmail = CNLabeledValue(label: CNLabelHome, value: txtHomeEmail.text! as NSString)
-        newContact.emailAddresses = [homeEmail]
-
+        let phoneNumber = CNPhoneNumber(stringValue: self.phoneNumber.text!)
+        let phoneNumberLabeledValue = CNLabeledValue(label: CNContactPhoneNumbersKey, value: phoneNumber)
+        newContact.phoneNumbers = [phoneNumberLabeledValue]
+        newContact.imageData = imageData
         do {
             let saveRequest = CNSaveRequest()
             saveRequest.add(newContact, toContainerWithIdentifier: nil)
             try AppDelegate.getAppDelegate().contactStore.execute(saveRequest)
-
-            navigationController?.popViewController(animated: true)
+            dismiss(animated: true, completion: nil)
         }
         catch {
             AppDelegate.getAppDelegate().showMessage("Unable to save the new contact.")
@@ -63,5 +64,22 @@ class CreateContactViewController: UIViewController, UITextFieldDelegate {
         textField.resignFirstResponder()
         return true
     }
-    
+
+    //MARK: UIImagePickerViewDelegate Methods
+    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        self.dismiss(animated: true, completion: nil)
+        pictureImageView.titleLabel?.text = ""
+        pictureImageView.setImage(info[UIImagePickerControllerOriginalImage] as! UIImage?, for: .normal)
+        imageView.image = info[UIImagePickerControllerOriginalImage] as! UIImage
+        imageData = UIImagePNGRepresentation(info[UIImagePickerControllerOriginalImage] as! UIImage)
+    }
+
+    @IBAction func selectImageButtonTapped(_ sender: Any) {
+        let pickerController = UIImagePickerController()
+        pickerController.delegate = self
+        pickerController.sourceType = .photoLibrary
+        pickerController.allowsEditing = true
+
+        present(pickerController, animated: true, completion: nil)
+    }
 }
