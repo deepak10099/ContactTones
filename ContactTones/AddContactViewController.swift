@@ -198,13 +198,14 @@ class AddContactViewController: UIViewController, UITextFieldDelegate, UITableVi
         var contactsArrayToDisplay:[CNMutableContact] = []
         if showOnlySelectedContacts {
             contactsArrayToDisplay = self.selectedContacts
+            cell.selectedButton.isUserInteractionEnabled = true
             cell.playPause.isHidden = false
             cell.selectedButton.setImage(UIImage(named: "record"), for: .normal)
         }
         else{
             contactsArrayToDisplay = self.fetchedContacts
             let currentContact = contactsArrayToDisplay[indexPath.row]
-
+            cell.selectedButton.isUserInteractionEnabled = false
             if currentContact.note == "selected" {
                 contactsTableView.selectRow(at: indexPath, animated: true, scrollPosition: UITableViewScrollPosition.none)
                 cell.selectedButton.titleLabel?.text = ""
