@@ -81,26 +81,6 @@ class AddContactViewController: UIViewController, UITextFieldDelegate, UITableVi
         contactsTableView.register(UINib(nibName: "ContactCell", bundle: nil), forCellReuseIdentifier: "contactCell")
     }
 
-    func refetchContact(contact: CNMutableContact, atIndexPath indexPath: IndexPath) {
-        AppDelegate.getAppDelegate().requestForAccess { (accessGranted) -> Void in
-            if accessGranted {
-                let keys = [CNContactFormatter.descriptorForRequiredKeys(for: CNContactFormatterStyle.fullName), CNContactImageDataKey, CNContactPhoneNumbersKey, CNContactNoteKey] as [Any]
-
-                do {
-                    let contactRefetched = try AppDelegate.getAppDelegate().contactStore.unifiedContact(withIdentifier: contact.identifier, keysToFetch: keys as! [CNKeyDescriptor])
-                    self.fetchedContacts[indexPath.row] = contactRefetched as! CNMutableContact
-
-                    DispatchQueue.main.async(execute: { () -> Void in
-                        self.contactsTableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
-                    })
-                }
-                catch {
-                    print("Unable to refetch the contact: \(contact)", separator: "", terminator: "\n")
-                }
-            }
-        }
-    }
-
     func textFieldDidChange(_ textField: UITextField) {
         AppDelegate.getAppDelegate().requestForAccess { (accessGranted) -> Void in
             if accessGranted {
@@ -154,6 +134,29 @@ class AddContactViewController: UIViewController, UITextFieldDelegate, UITableVi
     }
 
     // MARK: UITableViewDelegate function
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        switch editingStyle {
+        case .delete:
+            let cell:ContactCell = tableView.cellForRow(at: indexPath) as! ContactCell
+            let contact = fetchedContacts[indexPath.row]
+            let req = CNSaveRequest()
+            let mutableContact = contact.mutableCopy() as! CNMutableContact
+            req.delete(contact)
+
+            do{
+                try AppDelegate.getAppDelegate().contactStore.execute(req)
+                print("Success, You deleted the user")
+            } catch let e{
+                print("Error = \(e)")
+            }
+            textFieldDidChange(searchTextField)
+            contactsTableView.reloadData()
+//            contactsTableView.deleteRows(at: [indexPath], with: .fade)
+        default:
+            return
+        }
+        }
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if showOnlySelectedContacts {
             return
@@ -236,7 +239,12 @@ class AddContactViewController: UIViewController, UITextFieldDelegate, UITableVi
             cell.contactImage.isHidden = true
             cell.contactImageLabel.isHidden = false
             cell.contactImageLabel.textColor = UIColor.white
-            cell.contactImageLabel.text = String(describing: cell.fullName.text![(cell.fullName.text!.startIndex)])
+            if let fullname = cell.fullName.text{
+                cell.contactImageLabel.text = String(describing: cell.fullName.text![(cell.fullName.text!.startIndex)])
+            }
+            else{
+                cell.contactImageLabel.text = "#"
+            }
             cell.contactImageLabel.backgroundColor = getRandomColor()
         }
         return cell
@@ -328,6 +336,7 @@ class AddContactViewController: UIViewController, UITextFieldDelegate, UITableVi
             rightItemButton.setImage(UIImage(named: "refresh"), for: .normal)
             showOnlySelectedContacts = false
             textFieldDidChange(searchTextField)
+            searchTextField.textColor = UIColor.black
             contactsTableView.reloadData()
             headerView.backgroundColor = UIColor.white
         }
@@ -363,6 +372,7 @@ class AddContactViewController: UIViewController, UITextFieldDelegate, UITableVi
             }
             selectedContacts = tempContacts
             searchTextField.text = "My contacts"
+            searchTextField.textColor = UIColor.white
             contactsTableView.reloadData()
             headerView.backgroundColor = UIColor(netHex:0xF9C901)
         }
