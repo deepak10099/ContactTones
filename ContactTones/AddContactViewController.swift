@@ -86,7 +86,7 @@ class AddContactViewController: UIViewController, UITextFieldDelegate, UITableVi
             if accessGranted {
                 let predicate = CNMutableContact.predicateForContacts(matchingName: self.searchTextField.text!)
                 let keys = [CNContactFormatter.descriptorForRequiredKeys(for: CNContactFormatterStyle.fullName), CNContactPhoneNumbersKey, CNContactImageDataKey,CNContactNoteKey] as [Any]
-                var contacts = [CNMutableContact]()
+                var contacts = [CNContact]()
                 var message: String!
 
                 let contactsStore = AppDelegate.getAppDelegate().contactStore
@@ -116,7 +116,11 @@ class AddContactViewController: UIViewController, UITextFieldDelegate, UITableVi
 
                 }
                 else {
-                    self.fetchedContacts = contacts
+                    var tempContactArray:[CNMutableContact] = []
+                    for contact in contacts{
+                        tempContactArray.append(contact.mutableCopy() as! CNMutableContact)
+                    }
+                    self.fetchedContacts = tempContactArray
                     self.contactsTableView.reloadData()
                 }
             }
