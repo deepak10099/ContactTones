@@ -7,27 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0036F3031E7F46500060734E /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 0036F3021E7F46500060734E /* menu.png */; };
-		0078CB981E7DFC360010FBC8 /* check.png in Resources */ = {isa = PBXBuildFile; fileRef = 0078CB971E7DFC360010FBC8 /* check.png */; };
-		0099B21D1E7E0E4E00BDE502 /* checkedBox.png in Resources */ = {isa = PBXBuildFile; fileRef = 0099B21B1E7E0E4E00BDE502 /* checkedBox.png */; };
-		0099B21E1E7E0E4E00BDE502 /* uncheckedBox.png in Resources */ = {isa = PBXBuildFile; fileRef = 0099B21C1E7E0E4E00BDE502 /* uncheckedBox.png */; };
-		0099B2201E7E103F00BDE502 /* refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 0099B21F1E7E103F00BDE502 /* refresh.png */; };
-		0099B2291E7E9B8900BDE502 /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 0099B2251E7E9B8900BDE502 /* play.png */; };
-		0099B22A1E7E9B8900BDE502 /* record.png in Resources */ = {isa = PBXBuildFile; fileRef = 0099B2261E7E9B8900BDE502 /* record.png */; };
-		0099B22B1E7E9B8900BDE502 /* save.png in Resources */ = {isa = PBXBuildFile; fileRef = 0099B2271E7E9B8900BDE502 /* save.png */; };
-		0099B22C1E7E9B8900BDE502 /* stop.png in Resources */ = {isa = PBXBuildFile; fileRef = 0099B2281E7E9B8900BDE502 /* stop.png */; };
+		008628721E7FBC2E00C5DDB0 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 008628681E7FBC2E00C5DDB0 /* back.png */; };
+		008628731E7FBC2E00C5DDB0 /* check.png in Resources */ = {isa = PBXBuildFile; fileRef = 008628691E7FBC2E00C5DDB0 /* check.png */; };
+		008628741E7FBC2E00C5DDB0 /* checkedBox.png in Resources */ = {isa = PBXBuildFile; fileRef = 0086286A1E7FBC2E00C5DDB0 /* checkedBox.png */; };
+		008628751E7FBC2E00C5DDB0 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 0086286B1E7FBC2E00C5DDB0 /* menu.png */; };
+		008628761E7FBC2E00C5DDB0 /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 0086286C1E7FBC2E00C5DDB0 /* play.png */; };
+		008628771E7FBC2E00C5DDB0 /* record.png in Resources */ = {isa = PBXBuildFile; fileRef = 0086286D1E7FBC2E00C5DDB0 /* record.png */; };
+		008628781E7FBC2E00C5DDB0 /* refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 0086286E1E7FBC2E00C5DDB0 /* refresh.png */; };
+		008628791E7FBC2E00C5DDB0 /* save.png in Resources */ = {isa = PBXBuildFile; fileRef = 0086286F1E7FBC2E00C5DDB0 /* save.png */; };
+		0086287A1E7FBC2E00C5DDB0 /* stop.png in Resources */ = {isa = PBXBuildFile; fileRef = 008628701E7FBC2E00C5DDB0 /* stop.png */; };
+		0086287B1E7FBC2E00C5DDB0 /* uncheckedBox.png in Resources */ = {isa = PBXBuildFile; fileRef = 008628711E7FBC2E00C5DDB0 /* uncheckedBox.png */; };
+		0086287F1E7FBC7300C5DDB0 /* AddContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0086287D1E7FBC7300C5DDB0 /* AddContactViewController.swift */; };
+		008628801E7FBC7300C5DDB0 /* CreateContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0086287E1E7FBC7300C5DDB0 /* CreateContactViewController.swift */; };
+		0086288A1E7FBCCB00C5DDB0 /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008628871E7FBCCB00C5DDB0 /* ContactCell.swift */; };
+		0086288B1E7FBCCB00C5DDB0 /* ContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 008628881E7FBCCB00C5DDB0 /* ContactCell.xib */; };
+		0086288C1E7FBCCB00C5DDB0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 008628891E7FBCCB00C5DDB0 /* Main.storyboard */; };
 		009F43321E7D26D30085C680 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009F43311E7D26D30085C680 /* AppDelegate.swift */; };
-		009F43371E7D26D30085C680 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 009F43351E7D26D30085C680 /* Main.storyboard */; };
 		009F433A1E7D26D30085C680 /* ContactTones.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 009F43381E7D26D30085C680 /* ContactTones.xcdatamodeld */; };
 		009F433C1E7D26D30085C680 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 009F433B1E7D26D30085C680 /* Assets.xcassets */; };
 		009F433F1E7D26D30085C680 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 009F433D1E7D26D30085C680 /* LaunchScreen.storyboard */; };
 		009F434A1E7D26D30085C680 /* ContactTonesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009F43491E7D26D30085C680 /* ContactTonesTests.swift */; };
 		009F43551E7D26D30085C680 /* ContactTonesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009F43541E7D26D30085C680 /* ContactTonesUITests.swift */; };
-		009F43631E7D89A60085C680 /* AddContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009F43621E7D89A60085C680 /* AddContactViewController.swift */; };
-		009F43651E7D8A450085C680 /* CreateContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009F43641E7D8A450085C680 /* CreateContactViewController.swift */; };
-		009F43671E7D8A9C0085C680 /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009F43661E7D8A9C0085C680 /* ContactCell.swift */; };
-		009F43691E7DA8250085C680 /* ContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 009F43681E7DA8250085C680 /* ContactCell.xib */; };
-		009F43711E7DE0010085C680 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 009F43701E7DE0010085C680 /* back.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,18 +48,23 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0036F3021E7F46500060734E /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
-		0078CB971E7DFC360010FBC8 /* check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = check.png; sourceTree = "<group>"; };
-		0099B21B1E7E0E4E00BDE502 /* checkedBox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkedBox.png; sourceTree = "<group>"; };
-		0099B21C1E7E0E4E00BDE502 /* uncheckedBox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = uncheckedBox.png; sourceTree = "<group>"; };
-		0099B21F1E7E103F00BDE502 /* refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = refresh.png; sourceTree = "<group>"; };
-		0099B2251E7E9B8900BDE502 /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play.png; sourceTree = "<group>"; };
-		0099B2261E7E9B8900BDE502 /* record.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = record.png; sourceTree = "<group>"; };
-		0099B2271E7E9B8900BDE502 /* save.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = save.png; sourceTree = "<group>"; };
-		0099B2281E7E9B8900BDE502 /* stop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stop.png; sourceTree = "<group>"; };
+		008628681E7FBC2E00C5DDB0 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
+		008628691E7FBC2E00C5DDB0 /* check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = check.png; sourceTree = "<group>"; };
+		0086286A1E7FBC2E00C5DDB0 /* checkedBox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkedBox.png; sourceTree = "<group>"; };
+		0086286B1E7FBC2E00C5DDB0 /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
+		0086286C1E7FBC2E00C5DDB0 /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play.png; sourceTree = "<group>"; };
+		0086286D1E7FBC2E00C5DDB0 /* record.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = record.png; sourceTree = "<group>"; };
+		0086286E1E7FBC2E00C5DDB0 /* refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = refresh.png; sourceTree = "<group>"; };
+		0086286F1E7FBC2E00C5DDB0 /* save.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = save.png; sourceTree = "<group>"; };
+		008628701E7FBC2E00C5DDB0 /* stop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stop.png; sourceTree = "<group>"; };
+		008628711E7FBC2E00C5DDB0 /* uncheckedBox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = uncheckedBox.png; sourceTree = "<group>"; };
+		0086287D1E7FBC7300C5DDB0 /* AddContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactViewController.swift; sourceTree = "<group>"; };
+		0086287E1E7FBC7300C5DDB0 /* CreateContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateContactViewController.swift; sourceTree = "<group>"; };
+		008628871E7FBCCB00C5DDB0 /* ContactCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
+		008628881E7FBCCB00C5DDB0 /* ContactCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContactCell.xib; sourceTree = "<group>"; };
+		008628891E7FBCCB00C5DDB0 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		009F432E1E7D26D30085C680 /* ContactTones.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ContactTones.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		009F43311E7D26D30085C680 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		009F43361E7D26D30085C680 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		009F43391E7D26D30085C680 /* ContactTones.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ContactTones.xcdatamodel; sourceTree = "<group>"; };
 		009F433B1E7D26D30085C680 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		009F433E1E7D26D30085C680 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -70,11 +75,6 @@
 		009F43501E7D26D30085C680 /* ContactTonesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ContactTonesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		009F43541E7D26D30085C680 /* ContactTonesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTonesUITests.swift; sourceTree = "<group>"; };
 		009F43561E7D26D30085C680 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		009F43621E7D89A60085C680 /* AddContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactViewController.swift; sourceTree = "<group>"; };
-		009F43641E7D8A450085C680 /* CreateContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateContactViewController.swift; sourceTree = "<group>"; };
-		009F43661E7D8A9C0085C680 /* ContactCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
-		009F43681E7DA8250085C680 /* ContactCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContactCell.xib; sourceTree = "<group>"; };
-		009F43701E7DE0010085C680 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +102,42 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		008628671E7FBC2E00C5DDB0 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				008628681E7FBC2E00C5DDB0 /* back.png */,
+				008628691E7FBC2E00C5DDB0 /* check.png */,
+				0086286A1E7FBC2E00C5DDB0 /* checkedBox.png */,
+				0086286B1E7FBC2E00C5DDB0 /* menu.png */,
+				0086286C1E7FBC2E00C5DDB0 /* play.png */,
+				0086286D1E7FBC2E00C5DDB0 /* record.png */,
+				0086286E1E7FBC2E00C5DDB0 /* refresh.png */,
+				0086286F1E7FBC2E00C5DDB0 /* save.png */,
+				008628701E7FBC2E00C5DDB0 /* stop.png */,
+				008628711E7FBC2E00C5DDB0 /* uncheckedBox.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
+		0086287C1E7FBC7300C5DDB0 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				0086287D1E7FBC7300C5DDB0 /* AddContactViewController.swift */,
+				0086287E1E7FBC7300C5DDB0 /* CreateContactViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		008628861E7FBCCB00C5DDB0 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				008628871E7FBCCB00C5DDB0 /* ContactCell.swift */,
+				008628881E7FBCCB00C5DDB0 /* ContactCell.xib */,
+				008628891E7FBCCB00C5DDB0 /* Main.storyboard */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		009F43251E7D26D30085C680 = {
 			isa = PBXGroup;
 			children = (
@@ -125,26 +161,14 @@
 		009F43301E7D26D30085C680 /* ContactTones */ = {
 			isa = PBXGroup;
 			children = (
-				009F43401E7D26D30085C680 /* Info.plist */,
+				008628671E7FBC2E00C5DDB0 /* Images */,
+				0086287C1E7FBC7300C5DDB0 /* ViewControllers */,
+				008628861E7FBCCB00C5DDB0 /* Views */,
 				009F43311E7D26D30085C680 /* AppDelegate.swift */,
-				009F43621E7D89A60085C680 /* AddContactViewController.swift */,
-				009F43641E7D8A450085C680 /* CreateContactViewController.swift */,
-				009F43661E7D8A9C0085C680 /* ContactCell.swift */,
-				009F43681E7DA8250085C680 /* ContactCell.xib */,
+				009F43401E7D26D30085C680 /* Info.plist */,
 				009F433B1E7D26D30085C680 /* Assets.xcassets */,
 				009F43381E7D26D30085C680 /* ContactTones.xcdatamodeld */,
 				009F433D1E7D26D30085C680 /* LaunchScreen.storyboard */,
-				009F43701E7DE0010085C680 /* back.png */,
-				0078CB971E7DFC360010FBC8 /* check.png */,
-				0099B21B1E7E0E4E00BDE502 /* checkedBox.png */,
-				0099B21C1E7E0E4E00BDE502 /* uncheckedBox.png */,
-				0099B21F1E7E103F00BDE502 /* refresh.png */,
-				0099B2251E7E9B8900BDE502 /* play.png */,
-				0099B2261E7E9B8900BDE502 /* record.png */,
-				0099B2271E7E9B8900BDE502 /* save.png */,
-				0099B2281E7E9B8900BDE502 /* stop.png */,
-				0036F3021E7F46500060734E /* menu.png */,
-				009F43351E7D26D30085C680 /* Main.storyboard */,
 			);
 			path = ContactTones;
 			sourceTree = "<group>";
@@ -274,20 +298,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0099B21D1E7E0E4E00BDE502 /* checkedBox.png in Resources */,
-				0099B2291E7E9B8900BDE502 /* play.png in Resources */,
-				0099B22B1E7E9B8900BDE502 /* save.png in Resources */,
-				0099B22A1E7E9B8900BDE502 /* record.png in Resources */,
-				0036F3031E7F46500060734E /* menu.png in Resources */,
-				0078CB981E7DFC360010FBC8 /* check.png in Resources */,
+				008628781E7FBC2E00C5DDB0 /* refresh.png in Resources */,
+				008628771E7FBC2E00C5DDB0 /* record.png in Resources */,
+				008628791E7FBC2E00C5DDB0 /* save.png in Resources */,
+				008628751E7FBC2E00C5DDB0 /* menu.png in Resources */,
+				008628741E7FBC2E00C5DDB0 /* checkedBox.png in Resources */,
+				008628761E7FBC2E00C5DDB0 /* play.png in Resources */,
+				008628731E7FBC2E00C5DDB0 /* check.png in Resources */,
+				0086288C1E7FBCCB00C5DDB0 /* Main.storyboard in Resources */,
 				009F433F1E7D26D30085C680 /* LaunchScreen.storyboard in Resources */,
-				009F43711E7DE0010085C680 /* back.png in Resources */,
+				0086288B1E7FBCCB00C5DDB0 /* ContactCell.xib in Resources */,
+				0086287B1E7FBC2E00C5DDB0 /* uncheckedBox.png in Resources */,
+				008628721E7FBC2E00C5DDB0 /* back.png in Resources */,
 				009F433C1E7D26D30085C680 /* Assets.xcassets in Resources */,
-				009F43371E7D26D30085C680 /* Main.storyboard in Resources */,
-				0099B21E1E7E0E4E00BDE502 /* uncheckedBox.png in Resources */,
-				0099B22C1E7E9B8900BDE502 /* stop.png in Resources */,
-				0099B2201E7E103F00BDE502 /* refresh.png in Resources */,
-				009F43691E7DA8250085C680 /* ContactCell.xib in Resources */,
+				0086287A1E7FBC2E00C5DDB0 /* stop.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -312,10 +336,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				009F43671E7D8A9C0085C680 /* ContactCell.swift in Sources */,
+				0086288A1E7FBCCB00C5DDB0 /* ContactCell.swift in Sources */,
+				0086287F1E7FBC7300C5DDB0 /* AddContactViewController.swift in Sources */,
+				008628801E7FBC7300C5DDB0 /* CreateContactViewController.swift in Sources */,
 				009F433A1E7D26D30085C680 /* ContactTones.xcdatamodeld in Sources */,
-				009F43631E7D89A60085C680 /* AddContactViewController.swift in Sources */,
-				009F43651E7D8A450085C680 /* CreateContactViewController.swift in Sources */,
 				009F43321E7D26D30085C680 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -352,14 +376,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		009F43351E7D26D30085C680 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				009F43361E7D26D30085C680 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		009F433D1E7D26D30085C680 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
